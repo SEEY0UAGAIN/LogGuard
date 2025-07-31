@@ -6,9 +6,9 @@
 
 # ⚙️ Tech Stack
 
-Backend Node.js + Express
-Database MongoDB
-Frontend React + Chart.js
+Backend Node.js + Express |
+Database MongoDB |
+Frontend React + Chart.js |
 Notification Discord Webhook
 
 --
