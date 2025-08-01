@@ -4,7 +4,7 @@ const alertSchema = new mongoose.Schema({
   type: String,
   ip: String,
   details: String,
-  timestamp: { type: Date, ddfualt: Date.now },
+  timestamp: { type: Date, default: Date.now },
 });
 
 module.exports = mongoose.model("Alert", alertSchema);
