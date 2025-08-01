@@ -16,7 +16,7 @@ exports.receiveLog = async (req, res) => {
   }
 };
 
-exposts.getTopIPs = async (req, res) => {
+exports.getTopIPs = async (req, res) => {
   try {
     const topIPs = await Log.aggregate([
       { $group: { _id: "$ip", count: { $sum: 1 } } },
@@ -29,7 +29,7 @@ exposts.getTopIPs = async (req, res) => {
   }
 };
 
-expoets.getTopEndpoints = async (req, res) => {
+exports.getTopEndpoints = async (req, res) => {
   try {
     const topEndpoints = await Log.aggregate([
       { $group: { _id: "$endpoint", count: { $sum: 1 } } },

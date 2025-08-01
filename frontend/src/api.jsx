@@ -6,3 +6,5 @@ const API = axios.create({
 
 export const getLogs = () => API.get("/logs");
 export const getAlerts = () => API.get("/alerts");
+export const getTopIPs = () => API.get("/top-ips");
+export const getTopEndpoints = () => API.get("/top-endpoints");
