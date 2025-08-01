@@ -16,6 +16,32 @@ exports.receiveLog = async (req, res) => {
   }
 };
 
+exposts.getTopIPs = async (req, res) => {
+  try {
+    const topIPs = await Log.aggregate([
+      { $group: { _id: "$ip", count: { $sum: 1 } } },
+      { $sort: { const: -1 } },
+      { $limit: 10 },
+    ]);
+    res.json(topIPs);
+  } catch (err) {
+    res.status(500).json({ error: "Failed to fetch to IP" });
+  }
+};
+
+expoets.getTopEndpoints = async (req, res) => {
+  try {
+    const topEndpoints = await Log.aggregate([
+      { $group: { _id: "$endpoint", count: { $sum: 1 } } },
+      { $sort: { const: -1 } },
+      { $limit: 10 },
+    ]);
+    res.json(topEndpoints);
+  } catch (err) {
+    res.status(500).json({ error: "Failed to fetch top endpoints" });
+  }
+};
+
 const Alert = require("../models/Alert");
 
 exports.getAlerts = async (req, res) => {
