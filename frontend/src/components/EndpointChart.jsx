@@ -27,8 +27,10 @@ const EndpointChart = () => {
   }, []);
 
   return (
-    <div className="bg-white p-4 rounded shadow-md mt-6">
-      <h2 className="text-xl font-semibold mb-4">📍 Top Endpoints</h2>
+    <div className="bg-white p-6 rounded-2xl shadow-xl border border-emerald-100 hover:shadow-2xl transition duration-300">
+      <h2 className="text-xl font-semibold mb-4 text-emerald-700">
+        📍 Top 5 Endpoints
+      </h2>
       <Bar data={chartData} />
     </div>
   );

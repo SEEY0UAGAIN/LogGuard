@@ -15,30 +15,34 @@ const AlertTable = () => {
   }, []);
 
   return (
-    <div className="bg-white p-4 rounded shadow-md">
-      <h2 className="text-xl font-semibold mb-4">🚨 Recent Alerts</h2>
-      <table className="w-full table-auto text-sm">
-        <thead>
-          <tr className="bg-gray-200">
-            <th className="p-2 text-left">Type</th>
-            <th className="p-2 text-left">IP</th>
-            <th className="p-2 text-left">Details</th>
-            <th className="p-2 text-left">Timestamp</th>
-          </tr>
-        </thead>
-        <tbody>
-          {alerts.map((a, i) => (
-            <tr key={i} className="border-t">
-              <td className="p-2">{a.type}</td>
-              <td className="p-2">{a.ip}</td>
-              <td className="p-2">{a.details}</td>
-              <td className="p-2">
-                {a.timestamp ? new Date(a.timestamp).toLocaleString() : "-"}
-              </td>
+    <div className="bg-white p-6 rounded-2xl shadow-xl border border-red-100 hover:shadow-2xl transition duration-300">
+      <h2 className="text-xl font-semibold mb-4 text-red-700">
+        🚨 Recent Alerts
+      </h2>
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm text-left border-collapse">
+          <thead>
+            <tr className="bg-red-100 text-red-800">
+              <th className="p-2">Type</th>
+              <th className="p-2">IP</th>
+              <th className="p-2">Details</th>
+              <th className="p-2">Timestamp</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {alerts.map((a, i) => (
+              <tr key={i} className="border-b hover:bg-gray-50 transition">
+                <td className="p-2">{a.type}</td>
+                <td className="p-2">{a.ip}</td>
+                <td className="p-2">{a.details}</td>
+                <td className="p-2">
+                  {new Date(a.timestamp).toLocaleString()}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

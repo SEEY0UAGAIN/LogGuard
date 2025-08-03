@@ -46,8 +46,8 @@ const TopIPChart = () => {
   }, []);
 
   return (
-    <div className="bg-white p-4 rounded shadow-md mt-6">
-      <h2 className="text-xl font-semibold mb-4">📊 Top 10 IPs</h2>
+    <div className="bg-white p-6 rounded-2xl shadow-xl border border-blue-100 hover:shadow-2xl transition duration-300">
+      <h2 className="text-xl font-semibold mb-4 text-blue-700">📊 Top 5 IPs</h2>
       <Bar data={chartData} />
     </div>
   );
