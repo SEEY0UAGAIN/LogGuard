@@ -3,22 +3,49 @@ import { getAlerts } from "../api";
 
 const AlertTable = () => {
   const [alerts, setAlerts] = useState([]);
+  const [filters, setFilters] = useState({ ip: "", type: "", endpoint: "" });
+
+  const fetchAlerts = async () => {
+    const res = await getAlerts(filters);
+    setAlerts(res.data);
+  };
 
   useEffect(() => {
-    const fetchAlerts = async () => {
-      const res = await getAlerts();
-      setAlerts(res.data);
-    };
     fetchAlerts();
     const interval = setInterval(fetchAlerts, 10000); // refresh ทุก 10 วินาที
     return () => clearInterval(interval);
-  }, []);
+  }, [filters]);
 
   return (
     <div className="bg-white p-6 rounded-2xl shadow-xl border border-red-100 hover:shadow-2xl transition duration-300">
       <h2 className="text-xl font-semibold mb-4 text-red-700">
         🚨 Recent Alerts
       </h2>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+        <input
+          type="text"
+          placeholder="Filter by IP"
+          className="border p-2 rounded"
+          value={filters.ip}
+          onChange={(e) => setFilters({ ...filters, ip: e.target.value })}
+        />
+        <input
+          type="text"
+          placeholder="Filter by Type"
+          className="border p-2 rounded"
+          value={filters.type}
+          onChange={(e) => setFilters({ ...filters, type: e.target.value })}
+        />
+        <input
+          type="text"
+          placeholder="Filter by Endpoint"
+          className="border p-2 rounded"
+          value={filters.endpoint}
+          onChange={(e) => setFilters({ ...filters, endpoint: e.target.value })}
+        />
+      </div>
+
       <div className="overflow-x-auto">
         <table className="w-full text-sm text-left border-collapse">
           <thead>
@@ -42,6 +69,9 @@ const AlertTable = () => {
             ))}
           </tbody>
         </table>
+        {alerts.length === 0 && (
+          <div className="text-center text-gray-500 py-4">No alerts found</div>
+        )}
       </div>
     </div>
   );

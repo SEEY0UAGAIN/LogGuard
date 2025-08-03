@@ -13,6 +13,7 @@ const runDetection = async (log) => {
     alerts.push({
       type: "SQL Injection",
       ip,
+      endpoint,
       details: `Detected in endpoint: ${endpoint}`,
     });
   }
@@ -23,6 +24,7 @@ const runDetection = async (log) => {
     alerts.push({
       type: "Malicious User-Agent",
       ip,
+      endpoint,
       details: `Suspicious User Agent: ${userAgent}`,
     });
   }
@@ -33,6 +35,7 @@ const runDetection = async (log) => {
     alerts.push({
       type: "Sensitive Endpoint Access",
       ip,
+      endpoint,
       details: `Accessed: ${endpoint}`,
     });
   }
@@ -49,6 +52,7 @@ const runDetection = async (log) => {
     alerts.push({
       type: "Brute Force Login",
       ip,
+      endpoint,
       details: `Failed login ${recentLogs.length} times in last minute.`,
     });
   }
