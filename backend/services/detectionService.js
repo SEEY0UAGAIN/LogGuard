@@ -1,4 +1,3 @@
-const { Description } = require("@mui/icons-material");
 const Alert = require("../models/Alert");
 const axios = require("axios");
 
@@ -8,8 +7,26 @@ const runDetection = async (log) => {
   const alerts = [];
 
   //ตรวจพบ SQL Injection
-  const sqlInjectionPatterns = ["' OR 1=1", "UNION SELECT", "--", "/*"];
-  if (sqlInjectionPatterns.some((pattern) => endpoint.includes(pattern))) {
+  const sqlInjectionRegexes = [
+    /('|")\s*or\s+1\s*=\s*1/i,
+    /union\s+select/i,
+    /--/,
+    /\/\*/,
+    /;--/,
+    /;$/,
+    /\bexec\b/i,
+    /\bupdate\b/i,
+    /\bdelete\b/i,
+    /\binsert\b/i,
+    /\bdrop\b/i,
+    /\btruncate\b/i,
+  ];
+
+  const normalize = (str) => str.toLowerCase().replace(/\s+/g, "");
+
+  const normalizedEndpoint = normalize(endpoint);
+
+  if (sqlInjectionRegexes.some((regex) => regex.test(normalizedEndpoint))) {
     alerts.push({
       type: "SQL Injection",
       ip,

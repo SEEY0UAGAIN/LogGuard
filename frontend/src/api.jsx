@@ -8,3 +8,5 @@ export const getLogs = () => API.get("/logs");
 export const getAlerts = (params = {}) => API.get("/alerts", { params });
 export const getTopIPs = () => API.get("/top-ips");
 export const getTopEndpoints = () => API.get("/top-endpoints");
+
+export const postLog = (payload) => API.post("/", payload);
