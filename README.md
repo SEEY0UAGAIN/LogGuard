@@ -27,8 +27,8 @@ Notification Discord Webhook
   - Top 10 IP ที่มี log มากที่สุด
   - Top 10 Endpoints ที่ถูกเรียกบ่อย
 - [x] ตาราง Alert แบบ real-time (auto refresh)
-- [x] ระบบ Filter/Search (กำลังพัฒนา)
-- [ ] Export PDF รายงาน (เร็ว ๆ นี้)
+- [x] ระบบ Filter/Search
+- [x] Export PDF รายงาน
 
 --
 
