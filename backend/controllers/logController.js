@@ -21,7 +21,7 @@ exports.getTopIPs = async (req, res) => {
     const topIPs = await Log.aggregate([
       { $group: { _id: "$ip", count: { $sum: 1 } } },
       { $sort: { count: -1 } },
-      { $limit: 10 },
+      { $limit: 5 },
     ]);
     res.json(topIPs);
   } catch (err) {
@@ -34,7 +34,7 @@ exports.getTopEndpoints = async (req, res) => {
     const topEndpoints = await Log.aggregate([
       { $group: { _id: "$endpoint", count: { $sum: 1 } } },
       { $sort: { const: -1 } },
-      { $limit: 10 },
+      { $limit: 5 },
     ]);
     res.json(topEndpoints);
   } catch (err) {

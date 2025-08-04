@@ -19,8 +19,11 @@ const runDetection = async (log) => {
   }
 
   //ตรวจพบ Malicious User-Agent
-  const badAgents = ["sqlmap", "acunetix", "namp", "nikro"];
-  if (badAgents.some((agent) => userAgent.toLowerCase().includes(agent))) {
+  const badAgents = ["sqlmap", "acunetix", "nmap", "nikro"];
+  if (
+    userAgent &&
+    badAgents.some((agent) => userAgent.toLowerCase().includes(agent))
+  ) {
     alerts.push({
       type: "Malicious User-Agent",
       ip,
