@@ -1,0 +1,77 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  backend:
+    name: Build and Deploy Backend
+    runs-on: ubuntu-latest
+
+    steps:
+      # ดึงโค้ดจาก repo
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      # ติดตั้ง Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "22"
+
+      # ติดตั้ง dependencies ในโฟลเดอร์ Backend
+      - name: Install backend dependencies
+        working-directory: ./Backend
+        run: npm install
+
+      # (ถ้ามี) รันเทสต์ backend
+      - name: Run backend tests (ถ้ามี)
+        working-directory: ./Backend
+        run: npm test || echo "No tests found"
+
+      # Deploy backend ไป Render ผ่าน API
+      - name: Deploy backend to Render
+        env:
+          RENDER_SERVICE_ID: ${{ secrets.RENDER_SERVICE_ID }}
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+        run: |
+          curl -X POST "https://api.render.com/deploy/srv-${RENDER_SERVICE_ID}" \
+          -H "Accept: application/json" \
+          -H "Authorization: Bearer ${RENDER_API_KEY}"
+
+  frontend:
+    name: Build and Deploy Frontend
+    runs-on: ubuntu-latest
+    needs: backend # รันหลัง backend เสร็จ
+
+    steps:
+      # ดึงโค้ดจาก repo
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      # ติดตั้ง Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "22"
+
+      # ติดตั้ง dependencies ในโฟลเดอร์ Frontend
+      - name: Install frontend dependencies
+        working-directory: ./Frontend
+        run: npm install
+
+      # Build React App (Vite)
+      - name: Build frontend
+        working-directory: ./Frontend
+        run: npm run build
+
+      # Deploy frontend ไป Vercel
+      - name: Deploy frontend to Vercel
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          npx vercel --prod --token $VERCEL_TOKEN --confirm --scope $VERCEL_ORG_ID
