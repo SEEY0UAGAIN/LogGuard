@@ -7,6 +7,8 @@
 
 🌐 ทดสอบระบบได้ที่: [https://log-guard-nu.vercel.app/](https://log-guard-nu.vercel.app/)
 
+👉 ดู Log ใน Discord ได้ที่ : [https://discord.gg/RYAvqsZHDb](https://discord.gg/RYAvqsZHDb)
+
 # ⚙️ Tech Stack
 
 Backend: Node.js + Express |
